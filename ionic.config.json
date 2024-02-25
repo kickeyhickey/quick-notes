@@ -1,5 +1,7 @@
 {
   "name": "quick-notes",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }
