@@ -1,12 +1,17 @@
 import {
+  IonButton,
   IonCard,
   IonCardContent,
   IonCardTitle,
+  IonHeader,
+  IonIcon,
   IonModal,
   IonText,
+  IonToolbar,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import { NotesPage } from "../../components/notes-page/notes-page.component";
+import { Header } from "../../components/header/header.component";
 
 export function AllNotesPage() {
   const [notesArray, setNotesArray] = useState<string[]>([]);
@@ -38,6 +43,7 @@ export function AllNotesPage() {
 
   return (
     <NotesPage>
+      <Header title="Catagories" />
       <div
         style={{
           display: "flex",
@@ -46,7 +52,7 @@ export function AllNotesPage() {
           justifyContent: "center",
         }}
       >
-        <IonCard style={{ width: "600px", height: "600px" }}>
+        <IonCard>
           <IonCardTitle style={{ padding: "16px" }}>Catagories</IonCardTitle>
           <IonCardContent style={{ display: "flex", flexDirection: "column" }}>
             <IonText>yoyoyo</IonText>
