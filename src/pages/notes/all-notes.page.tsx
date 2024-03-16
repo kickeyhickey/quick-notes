@@ -19,7 +19,6 @@ export function AllNotesPage() {
   const [errorText, setErrorText] = useState<string>("");
   const [isNewNote, setIsNewNote] = useState<boolean>(false);
   const [isNewToDo, setIsNewToDo] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getNotes();
@@ -44,7 +43,7 @@ export function AllNotesPage() {
   return (
     <NotesPage>
       <Header>
-        <IonButton onClick={() => setIsModalOpen(true)}>
+        <IonButton id="open-modal">
           <IonText>All Catagories</IonText>
         </IonButton>
       </Header>
@@ -74,7 +73,7 @@ export function AllNotesPage() {
           <h2 style={{ padding: "16px" }}>{errorText}</h2>
         </IonModal>
       )}
-      <HkyModal open={isModalOpen} />
+      <HkyModal />
     </NotesPage>
   );
 }
