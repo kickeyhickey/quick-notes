@@ -1,15 +1,15 @@
-import React from "react";
 import { Routes, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import { Home } from "../pages/home/Home.page";
 import { AllNotesPage } from "../pages/notes/all-notes.page";
+import React from "react";
+import { AddNotePage } from "../pages/add-note/add-note.page";
 
 export default function HkyRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="archive" element={<AllNotesPage />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<AllNotesPage />} />
+        <Route path="/add-note" element={<AddNotePage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,17 +1,19 @@
-import { IonButton, IonModal } from "@ionic/react";
-import "./Home.module.css";
+import { IonButton, IonModal, IonText } from "@ionic/react";
+import "./add-note.module.css";
 import { useState } from "react";
-import React from "react";
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { ExploreContainer } from "./components/ExploreContainer.component";
 import DropDown from "../../components/drop-down/dropdown.component";
+import { Header } from "../../components/header/header.component";
+import { NotesPage } from "../../components/notes-page/notes-page.component";
 
 interface notesObjectProps {
   note_title: string;
   note_text: string;
 }
 
-export function Home(): JSX.Element {
+export function AddNotePage(): JSX.Element {
   const navigate = useNavigate();
   const [newNote, setNewNote] = useState<notesObjectProps>({
     note_title: "",
@@ -50,62 +52,51 @@ export function Home(): JSX.Element {
   };
 
   return (
-    <div>
-      <header
+    <NotesPage>
+      <Header>
+        <IonText>Add Note</IonText>
+      </Header>
+      <div
         style={{
-          position: "absolute",
-          width: "100vw",
-          top: 0,
-          backgroundColor: "red",
-          marginTop: "32px",
-          height: "56px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <DropDown />
-        </div>
-      </header>
-      <div>
-        <h1>{newNote.note_title}</h1>
-        <ExploreContainer
-          label={newNote.note_title}
-          text={newNote.note_text}
-          title={"Hickey Notes"}
-          handleChange={handleChange}
-          addNote={addNote}
-        />
-        {errorText && (
-          <IonModal>
-            <h2 style={{ padding: "16px" }}>{errorText}</h2>
-          </IonModal>
-        )}
-      </div>
-      <footer
-        style={{
-          bottom: 0,
-          position: "absolute",
-          width: "100%",
-          paddingBottom: "32px",
           display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <IonButton
-          onClick={() => navigate("/archive")}
-          style={{ width: "400px" }}
+        <div>
+          <h1>{newNote.note_title}</h1>
+          <ExploreContainer
+            label={newNote.note_title}
+            text={newNote.note_text}
+            title={"Hickey Notes"}
+            handleChange={handleChange}
+            addNote={addNote}
+          />
+          {errorText && (
+            <IonModal>
+              <h2 style={{ padding: "16px" }}>{errorText}</h2>
+            </IonModal>
+          )}
+        </div>
+        <footer
+          style={{
+            bottom: 0,
+            position: "absolute",
+            width: "100%",
+            paddingBottom: "32px",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          All Notes
-        </IonButton>
-      </footer>
-    </div>
+          <IonButton
+            onClick={() => navigate("/archive")}
+            style={{ width: "400px" }}
+          >
+            All Notes
+          </IonButton>
+        </footer>
+      </div>
+    </NotesPage>
   );
 }

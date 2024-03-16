@@ -1,6 +1,6 @@
 import { IonButton } from "@ionic/react";
 import style from "./ExploreContainer.module.css";
-import React from "react";
+import * as React from "react";
 
 interface ContainerProps {
   label: string;

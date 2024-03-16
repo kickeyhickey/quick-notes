@@ -1,28 +1,28 @@
-import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardTitle,
-  IonHeader,
-  IonIcon,
-  IonModal,
-  IonText,
-  IonToolbar,
-} from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import { IonButton, IonModal, IonText } from "@ionic/react";
+import { useEffect, useState } from "react";
 import { NotesPage } from "../../components/notes-page/notes-page.component";
+import React from "react";
+import DropDown from "../../components/drop-down/dropdown.component";
 import { Header } from "../../components/header/header.component";
+import HkyCard from "../../components/hky-card/hky-card.component";
+import FabButton from "../../components/fab-button/fab-button.component";
+import { HkyTabs } from "../../components/tabs/tabs.component";
+import { HkyModal } from "../../components/modal/hky-modal.component";
+
+interface Notes {
+  title: string;
+  note: string;
+}
 
 export function AllNotesPage() {
-  const [notesArray, setNotesArray] = useState<string[]>([]);
+  const [notesArray, setNotesArray] = useState<Notes[]>([]);
   const [errorText, setErrorText] = useState<string>("");
+  const [isNewNote, setIsNewNote] = useState<boolean>(false);
+  const [isNewToDo, setIsNewToDo] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getNotes();
-    console.warn(
-      "notes",
-      notesArray.map((v) => v)
-    );
   }, []);
 
   const getNotes = async (): Promise<void> => {
@@ -32,7 +32,7 @@ export function AllNotesPage() {
       const notes = await response.json();
       console.warn(
         "response",
-        notes.map((v: any) => v.title)
+        notes.map((v: Notes) => v.title)
       );
       setNotesArray(notes);
     } catch (error: any) {
@@ -43,7 +43,11 @@ export function AllNotesPage() {
 
   return (
     <NotesPage>
-      <Header title="Catagories" />
+      <Header>
+        <IonButton onClick={() => setIsModalOpen(true)}>
+          <IonText>All Catagories</IonText>
+        </IonButton>
+      </Header>
       <div
         style={{
           display: "flex",
@@ -52,24 +56,25 @@ export function AllNotesPage() {
           justifyContent: "center",
         }}
       >
-        <IonCard>
-          <IonCardTitle style={{ padding: "16px" }}>Catagories</IonCardTitle>
-          <IonCardContent style={{ display: "flex", flexDirection: "column" }}>
-            <IonText>yoyoyo</IonText>
-            {notesArray &&
-              notesArray.map((note: any, index: number): JSX.Element => {
-                return (
-                  <IonText key={`note.title${index}`}>{note.title}</IonText>
-                );
-              })}
-          </IonCardContent>
-        </IonCard>
+        {notesArray &&
+          notesArray.map((note: Notes, index: number): JSX.Element => {
+            return (
+              <HkyCard key={`${note}${index}`}>
+                <IonText key={`note.title${index}`}>{note.title}</IonText>
+              </HkyCard>
+            );
+          })}
+        <div style={{ padding: "16px", margin: "32px" }}>
+          <FabButton />
+        </div>
       </div>
+      <HkyTabs />
       {errorText && (
         <IonModal>
           <h2 style={{ padding: "16px" }}>{errorText}</h2>
         </IonModal>
       )}
+      <HkyModal open={isModalOpen} />
     </NotesPage>
   );
 }

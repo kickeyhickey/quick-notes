@@ -1,19 +1,14 @@
-import {
-  IonHeader,
-  IonToolbar,
-  IonButton,
-  IonIcon,
-  IonText,
-} from "@ionic/react";
-import React from "react";
+import { IonButton, IonIcon, IonText } from "@ionic/react";
 import IconArrowBack from "../../images/arrow-back-outline.svg";
 import { useNavigate } from "react-router";
+import React, { ReactNode } from "react";
 
 interface HeaderProps {
-  title: string;
+  children: ReactNode;
+  backButton?: boolean;
 }
 
-export function Header({ title }: HeaderProps): JSX.Element {
+export function Header({ children, backButton }: HeaderProps): JSX.Element {
   const navigate = useNavigate();
   return (
     <div
@@ -35,14 +30,18 @@ export function Header({ title }: HeaderProps): JSX.Element {
           alignItems: "center",
         }}
       >
-        <div style={{ display: "flex", flex: 1, justifyContent: "flex-start" }}>
-          <IonButton fill="clear" onClick={() => navigate("/")}>
-            <IonIcon src={IconArrowBack} />
-          </IonButton>
-        </div>
-        <div style={{ flex: 1 }}>
-          <IonText>{title}</IonText>
-        </div>
+        {backButton ? (
+          <div
+            style={{ display: "flex", flex: 1, justifyContent: "flex-start" }}
+          >
+            <IonButton fill="clear" onClick={() => navigate("/")}>
+              <IonIcon src={IconArrowBack} />
+            </IonButton>
+          </div>
+        ) : (
+          <div></div>
+        )}
+        <div style={{ flex: 1 }}>{children}</div>
         <div style={{ flex: 1 }}></div>
       </div>
     </div>

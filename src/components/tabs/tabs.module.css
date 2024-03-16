@@ -1,0 +1,12 @@
+.container {
+  height: 125px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.navPadding {
+  padding-bottom: 32px;
+  margin-top: 32px;
+}

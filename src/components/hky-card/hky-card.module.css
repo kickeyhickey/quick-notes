@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgb(56, 56, 56);
+  padding: 8px;
+  border-radius: 16px;
+  margin: 0 4px 16px 4px;
+  flex-grow: 1;
+}
+
+.noteContainer {
+  padding-bottom: 8px;
+}
+
+.dateText {
+  color: gray;
+  font-size: small;
+}
