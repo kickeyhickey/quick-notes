@@ -1,5 +1,6 @@
 .container {
-  padding: 8px 8px 90px;
+  padding: 16px;
+  margin: 16px 8px 8px 8px;
   background-color: beige;
   background: transparent !important;
   overflow: scroll;

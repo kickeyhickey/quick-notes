@@ -25,12 +25,7 @@ import HkyRouter from "./router/router";
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp
-    style={{
-      width: "100vw",
-      height: "100vh",
-    }}
-  >
+  <IonApp>
     <HkyRouter />
   </IonApp>
 );
