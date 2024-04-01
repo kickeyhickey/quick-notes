@@ -1,0 +1,18 @@
+.title {
+  font-size: 20px;
+  color: white;
+}
+
+.title :global .MuiTypography {
+  font-size: 56px;
+}
+
+.body {
+  font-size: 14px;
+  color: white;
+}
+
+.subtitle {
+  color: var(--ion-color-medium);
+  font-size: 14px;
+}

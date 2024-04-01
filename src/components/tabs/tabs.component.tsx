@@ -11,8 +11,13 @@ export function HkyTabs() {
   };
 
   return (
-    <Paper className={style.container} elevation={3}>
+    <Paper
+      sx={{ backgroundColor: "var(--ion-tabs-color)" }}
+      className={style.container}
+      elevation={3}
+    >
       <BottomNavigation
+        sx={{ backgroundColor: "var(--ion-tabs-color)" }}
         className={style.navPadding}
         showLabels
         onChange={handleChange}

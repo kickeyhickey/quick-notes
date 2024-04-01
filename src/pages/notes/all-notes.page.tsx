@@ -8,17 +8,20 @@ import HkyCard from "../../components/hky-card/hky-card.component";
 import FabButton from "../../components/fab-button/fab-button.component";
 import { HkyTabs } from "../../components/tabs/tabs.component";
 import { HkyModal } from "../../components/modal/hky-modal.component";
+import style from "./all-notes.module.css";
+import { BodyText, TitleText } from "../../components/common/text.component";
+import OutlinedButton from "../../components/common/button/outlined-button.component";
 
 interface Notes {
   title: string;
   note: string;
+  id: number;
 }
 
 export function AllNotesPage() {
   const [notesArray, setNotesArray] = useState<Notes[]>([]);
   const [errorText, setErrorText] = useState<string>("");
-  const [isNewNote, setIsNewNote] = useState<boolean>(false);
-  const [isNewToDo, setIsNewToDo] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getNotes();
@@ -43,22 +46,19 @@ export function AllNotesPage() {
   return (
     <NotesPage>
       <Header>
-        <IonButton id="open-modal">
-          <IonText>All Catagories</IonText>
-        </IonButton>
+        <div id="open-modal">
+          <OutlinedButton
+            onClick={() => setIsModalOpen(!isModalOpen ? true : false)}
+          >
+            <BodyText>All Catagories</BodyText>
+          </OutlinedButton>
+        </div>
       </Header>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className={style.container}>
         {notesArray &&
           notesArray.map((note: Notes, index: number): JSX.Element => {
             return (
-              <HkyCard key={`${note}${index}`}>
+              <HkyCard key={`${note}${index}`} id={note.id}>
                 <IonText key={`note.title${index}`}>{note.title}</IonText>
               </HkyCard>
             );

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import React, { ReactNode } from "react";
 
 interface HeaderProps {
-  children: ReactNode;
+  children?: ReactNode;
   backButton?: boolean;
 }
 
