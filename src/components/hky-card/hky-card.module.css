@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 100%;
   background-color: var(--ion-card-background);
-  padding: 8px;
+  padding: 12px;
   border-radius: 16px;
   margin: 0 4px 16px 4px;
   flex-grow: 1;
