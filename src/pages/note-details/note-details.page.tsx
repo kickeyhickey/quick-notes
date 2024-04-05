@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { NavigateFunction, useNavigate, useParams } from "react-router";
 import { NotesPage } from "../../components/notes-page/notes-page.component";
 import { Header } from "../../components/header/header.component";
 import BackArrow from "../../images/arrow-back-outline.svg";
@@ -15,7 +15,8 @@ interface NoteProps {
 }
 
 export default function NoteDetailsPage() {
-  const [note, setNote] = useState<any>([]);
+  const [note, setNote] = useState<NoteProps[]>([]);
+  const navigate: NavigateFunction = useNavigate();
   const { id } = useParams();
 
   const getNote = async (): Promise<void> => {
@@ -34,6 +35,28 @@ export default function NoteDetailsPage() {
     }
   };
 
+  const deleteNote = async () => {
+    if (id) {
+      try {
+        console.warn("DELETE");
+        let noteId = JSON.parse(id);
+
+        const response = await fetch(`http://localhost:3000/notes/${noteId}`, {
+          method: "DELETE",
+        });
+        console.warn("response", response);
+
+        if (response.status !== 200 && response.status !== 304) {
+          alert("Something went wrong with DELETE");
+          return;
+        }
+        navigate("/");
+      } catch (error: any) {
+        console.warn("Error", error);
+      }
+    }
+  };
+
   useEffect(() => {
     if (id) {
       getNote();
@@ -42,11 +65,11 @@ export default function NoteDetailsPage() {
 
   return (
     <NotesPage>
-      <Header backButton />
+      <Header isDelete backButton deleteNote={deleteNote} />
       {note &&
         note.map((note: NoteProps, i: number) => {
           return (
-            <HkyCard id={note.id}>
+            <HkyCard id={note.id} key={`${note}${i}`}>
               <div
                 style={{
                   padding: "16px",

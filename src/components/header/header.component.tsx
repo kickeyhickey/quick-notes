@@ -1,14 +1,22 @@
-import { IonButton, IonIcon, IonText } from "@ionic/react";
+import { IonButton, IonIcon } from "@ionic/react";
 import IconArrowBack from "../../images/arrow-back-outline.svg";
 import { useNavigate } from "react-router";
 import React, { ReactNode } from "react";
+import TrashBin from "../../images/trash-bin-outline.svg";
 
 interface HeaderProps {
   children?: ReactNode;
   backButton?: boolean;
+  isDelete?: boolean;
+  deleteNote?: () => void;
 }
 
-export function Header({ children, backButton }: HeaderProps): JSX.Element {
+export function Header({
+  deleteNote,
+  children,
+  backButton,
+  isDelete,
+}: HeaderProps): JSX.Element {
   const navigate = useNavigate();
   return (
     <div
@@ -43,6 +51,11 @@ export function Header({ children, backButton }: HeaderProps): JSX.Element {
         )}
         <div style={{ flex: 1 }}>{children}</div>
         <div style={{ flex: 1 }}></div>
+        {isDelete && (
+          <IonButton fill="clear" onClick={deleteNote}>
+            <IonIcon src={TrashBin} />
+          </IonButton>
+        )}
       </div>
     </div>
   );
