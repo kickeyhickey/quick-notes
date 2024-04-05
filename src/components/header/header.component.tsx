@@ -3,6 +3,7 @@ import IconArrowBack from "../../images/arrow-back-outline.svg";
 import { useNavigate } from "react-router";
 import React, { ReactNode } from "react";
 import TrashBin from "../../images/trash-bin-outline.svg";
+import style from "./header.module.css";
 
 interface HeaderProps {
   children?: ReactNode;
@@ -19,29 +20,10 @@ export function Header({
 }: HeaderProps): JSX.Element {
   const navigate = useNavigate();
   return (
-    <div
-      style={{
-        marginBottom: "48px",
-        alignItems: "center",
-        textAlign: "center",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignContent: "center",
-          width: "auto",
-          height: "35px",
-          padding: 0,
-          alignItems: "center",
-        }}
-      >
+    <div className={style.container}>
+      <div className={style.headerBody}>
         {backButton ? (
-          <div
-            style={{ display: "flex", flex: 1, justifyContent: "flex-start" }}
-          >
+          <div className={style.buttonContainer}>
             <IonButton fill="clear" onClick={() => navigate("/")}>
               <IonIcon src={IconArrowBack} />
             </IonButton>

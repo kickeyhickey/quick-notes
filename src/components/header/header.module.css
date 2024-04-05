@@ -1,0 +1,21 @@
+.container {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.headerBody {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  width: auto;
+  height: 35px;
+  padding: 0;
+  align-items: center;
+}
+
+.buttonContainer {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+}
