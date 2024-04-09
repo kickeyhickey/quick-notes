@@ -3,7 +3,7 @@ import "./add-note.module.css";
 import { useState } from "react";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { ExploreContainer } from "./components/ExploreContainer.component";
+import { TextForms } from "./components/text-forms.component";
 import DropDown from "../../components/drop-down/dropdown.component";
 import { Header } from "../../components/header/header.component";
 import { NotesPage } from "../../components/notes-page/notes-page.component";
@@ -21,9 +21,8 @@ export function AddNotePage(): JSX.Element {
   });
   const [errorText, setErrorText] = useState<string>("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: any) => {
     newNote[e.target.name as keyof notesObjectProps] = e.target.value;
-    console.warn(newNote, "name");
 
     setNewNote(newNote);
   };
@@ -36,12 +35,11 @@ export function AddNotePage(): JSX.Element {
         body: JSON.stringify(newNote),
       });
       fetch(request).then((response) => {
-        console.warn(response);
-
         response
           .json()
           .then(function (data) {
             console.log(data, "data");
+            navigate("/all-notes");
           })
           .catch(function (err) {
             setErrorText(err);
@@ -53,50 +51,17 @@ export function AddNotePage(): JSX.Element {
 
   return (
     <NotesPage>
-      <Header>
+      <Header addNote={addNote} backButton>
         <IonText>Add Note</IonText>
       </Header>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div>
-          <h1>{newNote.note_title}</h1>
-          <ExploreContainer
-            label={newNote.note_title}
-            text={newNote.note_text}
-            title={"Hickey Notes"}
-            handleChange={handleChange}
-            addNote={addNote}
-          />
-          {errorText && (
-            <IonModal>
-              <h2 style={{ padding: "16px" }}>{errorText}</h2>
-            </IonModal>
-          )}
-        </div>
-        <footer
-          style={{
-            bottom: 0,
-            position: "absolute",
-            width: "100%",
-            paddingBottom: "32px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <IonButton
-            onClick={() => navigate("/archive")}
-            style={{ width: "400px" }}
-          >
-            All Notes
-          </IonButton>
-        </footer>
-      </div>
+      <h1>{newNote.note_title}</h1>
+
+      <TextForms handleChange={handleChange} />
+      {errorText && (
+        <IonModal>
+          <h2 style={{ padding: "16px" }}>{errorText}</h2>
+        </IonModal>
+      )}
     </NotesPage>
   );
 }

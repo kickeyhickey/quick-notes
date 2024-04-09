@@ -2,7 +2,8 @@ import { IonButton, IonIcon } from "@ionic/react";
 import IconArrowBack from "../../images/arrow-back-outline.svg";
 import { useNavigate } from "react-router";
 import React, { ReactNode } from "react";
-import TrashBin from "../../images/trash-bin-outline.svg";
+import TrashBinImg from "../../images/trash-bin-outline.svg";
+import CheckMarkImg from "../../images/check-o.svg";
 import style from "./header.module.css";
 
 interface HeaderProps {
@@ -10,15 +11,18 @@ interface HeaderProps {
   backButton?: boolean;
   isDelete?: boolean;
   deleteNote?: () => void;
+  addNote?: () => void;
 }
 
 export function Header({
+  addNote,
   deleteNote,
   children,
   backButton,
   isDelete,
 }: HeaderProps): JSX.Element {
   const navigate = useNavigate();
+
   return (
     <div className={style.container}>
       <div className={style.headerBody}>
@@ -35,7 +39,12 @@ export function Header({
         <div style={{ flex: 1 }}></div>
         {isDelete && (
           <IonButton fill="clear" onClick={deleteNote}>
-            <IonIcon src={TrashBin} />
+            <IonIcon src={TrashBinImg} />
+          </IonButton>
+        )}
+        {addNote && (
+          <IonButton fill="clear" onClick={addNote}>
+            <IonIcon src={CheckMarkImg} />
           </IonButton>
         )}
       </div>
