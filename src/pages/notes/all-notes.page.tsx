@@ -1,16 +1,16 @@
-import { IonButton, IonModal, IonText } from "@ionic/react";
+import { IonModal, IonText } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { NotesPage } from "../../components/notes-page/notes-page.component";
 import React from "react";
-import DropDown from "../../components/drop-down/dropdown.component";
 import { Header } from "../../components/header/header.component";
-import HkyCard from "../../components/hky-card/hky-card.component";
 import FabButton from "../../components/fab-button/fab-button.component";
 import { HkyTabs } from "../../components/tabs/tabs.component";
 import { HkyModal } from "../../components/modal/hky-modal.component";
 import style from "./all-notes.module.css";
-import { BodyText, TitleText } from "../../components/common/text.component";
+import { BodyText } from "../../components/common/text.component";
 import OutlinedButton from "../../components/common/button/outlined-button.component";
+import { HkyCard } from "../../components/hky-card/hky-card.component";
+import { NavigateFunction, useNavigate } from "react-router";
 
 interface Notes {
   title: string;
@@ -22,9 +22,10 @@ export function AllNotesPage() {
   const [notesArray, setNotesArray] = useState<Notes[]>([]);
   const [errorText, setErrorText] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
-    getNotes();
+    void getNotes();
   }, []);
 
   const getNotes = async (): Promise<void> => {
@@ -32,10 +33,7 @@ export function AllNotesPage() {
       const response = await fetch("http://localhost:3000/notes");
 
       const notes = await response.json();
-      console.warn(
-        "response",
-        notes.map((v: Notes) => v.title)
-      );
+
       setNotesArray(notes);
     } catch (error: any) {
       console.error(error);
@@ -55,10 +53,13 @@ export function AllNotesPage() {
         </div>
       </Header>
       <div className={style.container}>
-        {notesArray &&
+        {notesArray.length &&
           notesArray.map((note: Notes, index: number): JSX.Element => {
             return (
-              <HkyCard key={`${note}${index}`} id={note.id}>
+              <HkyCard
+                key={`${note}${index}`}
+                onClick={() => navigate(`/notes/${note.id}`)}
+              >
                 <IonText key={`note.title${index}`}>{note.title}</IonText>
               </HkyCard>
             );

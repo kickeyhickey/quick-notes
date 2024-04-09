@@ -8,15 +8,12 @@ import {
 import React from "react";
 import style from "./fab-button.module.css";
 
-import {
-  add,
-  chevronBack,
-  chevronDown,
-  chevronForward,
-  chevronUp,
-} from "ionicons/icons";
+import { add, chevronBack, navigate } from "ionicons/icons";
+import { NavigateFunction, useNavigate } from "react-router";
 
 export default function FabButton() {
+  const navigate: NavigateFunction = useNavigate();
+
   return (
     <IonFab
       className={style.buttonMargin}
@@ -29,7 +26,7 @@ export default function FabButton() {
         <IonIcon icon={add}></IonIcon>
       </IonFabButton>
       <IonFabList side="start">
-        <IonFabButton>
+        <IonFabButton onClick={() => navigate("/add-note")}>
           <IonIcon icon={chevronBack}></IonIcon>
           <IonText color={"white"}>Note</IonText>
         </IonFabButton>
