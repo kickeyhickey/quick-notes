@@ -5,26 +5,33 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import style from "./tabs.module.css";
 
-export function HkyTabs() {
-  const handleChange = () => {
-    console.warn("tabs button pressed");
-  };
+export function HkyTabs(): JSX.Element {
+  const handleChange = () => {};
 
   return (
     <Paper
-      sx={{ backgroundColor: "var(--ion-tabs-color)" }}
+      sx={{ background: "var(--ion-card-background)" }}
       className={style.container}
       elevation={3}
     >
       <BottomNavigation
-        sx={{ backgroundColor: "var(--ion-tabs-color)" }}
+        sx={{ background: "var(--ion-card-background)" }}
         className={style.navPadding}
         showLabels
         onChange={handleChange}
       >
-        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Archive" icon={<LocationOnIcon />} />
+        <BottomNavigationAction
+          className={style.fontColor}
+          label="Notes"
+          sx={{ color: "white" }}
+          icon={<RestoreIcon />}
+        />
+        <BottomNavigationAction
+          className={style.fontColor}
+          label="To-Dos"
+          sx={{ color: "white" }}
+          icon={<FavoriteIcon />}
+        />
       </BottomNavigation>
     </Paper>
   );
