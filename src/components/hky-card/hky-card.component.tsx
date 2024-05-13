@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 import style from "./hky-card.module.css";
 import React from "react";
-import { useNavigate } from "react-router";
-import { SubtitleText } from "../common/text.component";
 
 interface CardProps {
   id?: number;
