@@ -11,11 +11,11 @@ interface HeaderProps {
   backButton?: boolean;
   isDelete?: boolean;
   deleteNote?: () => void;
-  addNote?: () => void;
+  onClick?: () => void;
 }
 
 export function Header({
-  addNote,
+  onClick,
   deleteNote,
   children,
   backButton,
@@ -42,8 +42,8 @@ export function Header({
             <IonIcon src={TrashBinImg} />
           </IonButton>
         )}
-        {addNote && (
-          <IonButton fill="clear" onClick={addNote}>
+        {onClick && (
+          <IonButton fill="clear" onClick={onClick}>
             <IonIcon src={CheckMarkImg} />
           </IonButton>
         )}
