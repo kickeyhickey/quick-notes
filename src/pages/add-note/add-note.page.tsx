@@ -29,6 +29,8 @@ export function AddNotePage(): JSX.Element {
     setNewNote(newNote);
   };
 
+  console.log("here");
+
   const addNote = () => {
     if (newNote.title && newNote.note) {
       console.warn("e", newNote);
