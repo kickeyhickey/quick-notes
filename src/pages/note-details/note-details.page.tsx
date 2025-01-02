@@ -8,11 +8,20 @@ import { TextForms } from "../add-note/components/text-forms.component";
 export interface NoteProps {
   title: string;
   note: string;
-  id: number;
+}
+
+interface FetchedNoteTypes {
+  title: string;
+  note: string;
+  id: number | null;
 }
 
 export default function NoteDetailsPage() {
-  const [fetchedNote, setFetchedNote] = useState<any>({});
+  const [fetchedNote, setFetchedNote] = useState<FetchedNoteTypes>({
+    title: "",
+    note: "",
+    id: null,
+  });
   const [errorText, setErrorText] = useState<string>("");
   const navigate: NavigateFunction = useNavigate();
   const { id } = useParams();
@@ -55,23 +64,20 @@ export default function NoteDetailsPage() {
   };
 
   const editNote = async (): Promise<void> => {
-    console.warn("editnotes", fetchedNote);
-    if (id) {
-      try {
-        const response = await fetch(`http://localhost:3001/notes/${id}`, {
-          method: "PUT",
+    try {
+      const response = await fetch(`http://localhost:3001/notes/${id}`, {
+        method: "PUT",
+        headers: new Headers({ "Content-Type": "application/json" }),
+        body: JSON.stringify(fetchedNote),
+      });
 
-          body: JSON.stringify(fetchedNote),
-        });
-
-        if (response.status !== 200 && response.status !== 304) {
-          alert("Something went wrong with UPDATE");
-          return;
-        }
-        navigate("/");
-      } catch (error: any) {
-        console.warn("Error", error);
+      if (response.status !== 200 && response.status !== 304) {
+        alert("Something went wrong with UPDATE");
+        return;
       }
+      navigate("/");
+    } catch (error: any) {
+      console.warn("Error", error);
     }
   };
 
@@ -82,9 +88,7 @@ export default function NoteDetailsPage() {
   }, []);
 
   const handleChange = (e: any) => {
-    if (fetchedNote) {
-      fetchedNote[e.target.name as keyof NoteProps] = e.target.value;
-    }
+    fetchedNote[e.target.name as keyof NoteProps] = e.target.value;
     setFetchedNote(fetchedNote);
   };
 
