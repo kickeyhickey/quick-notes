@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { NavigateFunction, useNavigate, useParams } from "react-router";
 import { NotesPage } from "../../components/notes-page/notes-page.component";
 import { Header } from "../../components/header/header.component";
-import { IonText, IonModal } from "@ionic/react";
 import { TextForms } from "../add-note/components/text-forms.component";
 
 export interface NoteProps {
@@ -22,7 +21,6 @@ export default function NoteDetailsPage() {
     note: "",
     id: null,
   });
-  const [errorText, setErrorText] = useState<string>("");
   const navigate: NavigateFunction = useNavigate();
   const { id } = useParams();
 
@@ -34,7 +32,6 @@ export default function NoteDetailsPage() {
         const response = await fetch(`http://localhost:3001/notes/${noteId}`);
 
         const note = await response.json();
-        console.warn("getnote", note);
 
         setFetchedNote(note[0]);
       } catch (error: any) {
@@ -77,7 +74,7 @@ export default function NoteDetailsPage() {
       }
       navigate("/");
     } catch (error: any) {
-      console.warn("Error", error);
+      console.warn("Error", error.message);
     }
   };
 
@@ -87,38 +84,25 @@ export default function NoteDetailsPage() {
     }
   }, []);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     fetchedNote[e.target.name as keyof NoteProps] = e.target.value;
     setFetchedNote(fetchedNote);
+  };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.code === "Enter") {
+      editNote();
+    }
   };
 
   return (
     <NotesPage>
       <Header onClick={editNote} backButton></Header>
-
-      <TextForms note={fetchedNote} handleChange={handleChange} />
-      {errorText && (
-        <IonModal>
-          <h2 style={{ padding: "16px" }}>{errorText}</h2>
-        </IonModal>
-      )}
+      <TextForms
+        onKeyDown={onKeyDown}
+        note={fetchedNote}
+        handleChange={handleChange}
+      />
     </NotesPage>
-    // <NotesPage>
-    //   <Header isDelete backButton deleteNote={deleteNote} />
-    //   {note &&
-    //     note.map((note: NoteProps, i: number) => {
-    //       return (
-    //         <HkyCard id={note.id} key={`${note}${i}`}>
-    //           <div className={style.padding}>
-    //             <TitleText>{note.title}</TitleText>
-    //           </div>
-    //           <Border />
-    //           <CardBody>
-    //             <BodyText>{note.note}</BodyText>
-    //           </CardBody>
-    //         </HkyCard>
-    //       );
-    //     })}
-    // </NotesPage>
   );
 }
