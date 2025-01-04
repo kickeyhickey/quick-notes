@@ -1,29 +1,40 @@
-import { IonButton, IonInput, IonItem } from "@ionic/react";
 import style from "./text-forms.module.css";
 import * as React from "react";
 
 interface TextFormProps {
   handleChange: (e: any) => void;
+  note?: any;
+  onKeyDown?: (e: any) => void;
 }
 
-export function TextForms({ handleChange }: TextFormProps): JSX.Element {
+export function TextForms({
+  handleChange,
+  note,
+  onKeyDown,
+}: TextFormProps): JSX.Element {
   return (
     <div>
-      <div style={{ paddingBottom: "16px" }}>
-        <input
+      <>
+        <div style={{ paddingBottom: "16px" }}>
+          <input
+            onChange={handleChange}
+            onKeyDown={onKeyDown}
+            type="text"
+            name="title"
+            placeholder="Title"
+            className={style.title}
+            defaultValue={note?.title}
+          />
+        </div>
+        <textarea
+          onKeyDown={onKeyDown}
+          placeholder="Note"
+          className={style.textarea}
           onChange={handleChange}
-          type="text"
-          name="note_title"
-          placeholder="Title"
-          className={style.title}
+          name="note"
+          defaultValue={note?.note}
         />
-      </div>
-      <textarea
-        className={style.textarea}
-        onChange={handleChange}
-        name="note_text"
-        placeholder="Text"
-      />
+      </>
     </div>
   );
 }

@@ -2,20 +2,25 @@ import React, { useEffect, useState } from "react";
 import { NavigateFunction, useNavigate, useParams } from "react-router";
 import { NotesPage } from "../../components/notes-page/notes-page.component";
 import { Header } from "../../components/header/header.component";
-import BackArrow from "../../images/arrow-back-outline.svg";
-import { BodyText, TitleText } from "../../components/common/text.component";
-import { CardBody } from "../../components/hky-card/card-body/card-body.component";
-import Border from "../../components/common/border-line/border.component";
-import { HkyCard } from "../../components/hky-card/hky-card.component";
+import { TextForms } from "../add-note/components/text-forms.component";
 
-interface NoteProps {
+export interface NoteProps {
   title: string;
   note: string;
-  id: number;
+}
+
+interface FetchedNoteTypes {
+  title: string;
+  note: string;
+  id: number | null;
 }
 
 export default function NoteDetailsPage() {
-  const [note, setNote] = useState<NoteProps[]>([]);
+  const [fetchedNote, setFetchedNote] = useState<FetchedNoteTypes>({
+    title: "",
+    note: "",
+    id: null,
+  });
   const navigate: NavigateFunction = useNavigate();
   const { id } = useParams();
 
@@ -24,10 +29,11 @@ export default function NoteDetailsPage() {
     if (id) {
       noteId = JSON.parse(id);
       try {
-        const response = await fetch(`http://localhost:3000/notes/${noteId}`);
+        const response = await fetch(`http://localhost:3001/notes/${noteId}`);
 
         const note = await response.json();
-        setNote(note);
+
+        setFetchedNote(note[0]);
       } catch (error: any) {
         console.warn(error);
       }
@@ -39,7 +45,7 @@ export default function NoteDetailsPage() {
       try {
         let noteId = JSON.parse(id);
 
-        const response = await fetch(`http://localhost:3000/notes/${noteId}`, {
+        const response = await fetch(`http://localhost:3001/notes/${noteId}`, {
           method: "DELETE",
         });
 
@@ -54,33 +60,49 @@ export default function NoteDetailsPage() {
     }
   };
 
+  const editNote = async (): Promise<void> => {
+    try {
+      const response = await fetch(`http://localhost:3001/notes/${id}`, {
+        method: "PUT",
+        headers: new Headers({ "Content-Type": "application/json" }),
+        body: JSON.stringify(fetchedNote),
+      });
+
+      if (response.status !== 200 && response.status !== 304) {
+        alert("Something went wrong with UPDATE");
+        return;
+      }
+      navigate("/");
+    } catch (error: any) {
+      console.warn("Error", error.message);
+    }
+  };
+
   useEffect(() => {
     if (id) {
       getNote();
     }
   }, []);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    fetchedNote[e.target.name as keyof NoteProps] = e.target.value;
+    setFetchedNote(fetchedNote);
+  };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.code === "Enter") {
+      editNote();
+    }
+  };
+
   return (
     <NotesPage>
-      <Header isDelete backButton deleteNote={deleteNote} />
-      {note &&
-        note.map((note: NoteProps, i: number) => {
-          return (
-            <HkyCard id={note.id} key={`${note}${i}`}>
-              <div
-                style={{
-                  padding: "16px",
-                }}
-              >
-                <TitleText>{note.title}</TitleText>
-              </div>
-              <Border />
-              <CardBody>
-                <BodyText>{note.note}</BodyText>
-              </CardBody>
-            </HkyCard>
-          );
-        })}
+      <Header onClick={editNote} backButton></Header>
+      <TextForms
+        onKeyDown={onKeyDown}
+        note={fetchedNote}
+        handleChange={handleChange}
+      />
     </NotesPage>
   );
 }

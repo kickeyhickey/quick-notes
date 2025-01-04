@@ -24,15 +24,12 @@ export function AllNotesPage() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const navigate: NavigateFunction = useNavigate();
 
-  useEffect(() => {
-    void getNotes();
-  }, []);
-
   const getNotes = async (): Promise<void> => {
     try {
-      const response = await fetch("http://localhost:3000/notes");
+      const response = await fetch("http://localhost:3001/notes");
 
       const notes = await response.json();
+      console.warn("notes", notes);
 
       setNotesArray(notes);
     } catch (error: any) {
@@ -40,6 +37,10 @@ export function AllNotesPage() {
       setErrorText(error.body);
     }
   };
+
+  useEffect(() => {
+    void getNotes();
+  }, []);
 
   return (
     <NotesPage>
@@ -52,6 +53,7 @@ export function AllNotesPage() {
           </OutlinedButton>
         </div>
       </Header>
+
       <div className={style.container}>
         {notesArray.length &&
           notesArray.map((note: Notes, index: number): JSX.Element => {

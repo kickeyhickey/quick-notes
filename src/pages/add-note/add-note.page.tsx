@@ -8,28 +8,33 @@ import DropDown from "../../components/drop-down/dropdown.component";
 import { Header } from "../../components/header/header.component";
 import { NotesPage } from "../../components/notes-page/notes-page.component";
 
-interface notesObjectProps {
-  note_title: string;
-  note_text: string;
+export interface NotesObjectProps {
+  title: string;
+  note: string;
 }
 
 export function AddNotePage(): JSX.Element {
   const navigate = useNavigate();
-  const [newNote, setNewNote] = useState<notesObjectProps>({
-    note_title: "",
-    note_text: "",
+  const [newNote, setNewNote] = useState<NotesObjectProps>({
+    title: "",
+    note: "",
   });
   const [errorText, setErrorText] = useState<string>("");
 
   const handleChange = (e: any) => {
-    newNote[e.target.name as keyof notesObjectProps] = e.target.value;
+    console.warn("handle", e.target.value);
+
+    newNote[e.target.name as keyof NotesObjectProps] = e.target.value;
 
     setNewNote(newNote);
   };
 
+  console.log("here");
+
   const addNote = () => {
-    if (newNote.note_title && newNote.note_text) {
-      const request = new Request("http://localhost:3000/new-note", {
+    if (newNote.title && newNote.note) {
+      console.warn("e", newNote);
+      const request = new Request("http://localhost:3001/notes", {
         method: "POST",
         headers: new Headers({ "Content-Type": "application/json" }),
         body: JSON.stringify(newNote),
@@ -51,10 +56,9 @@ export function AddNotePage(): JSX.Element {
 
   return (
     <NotesPage>
-      <Header addNote={addNote} backButton>
+      <Header onClick={addNote} backButton>
         <IonText>Add Note</IonText>
       </Header>
-      <h1>{newNote.note_title}</h1>
 
       <TextForms handleChange={handleChange} />
       {errorText && (
