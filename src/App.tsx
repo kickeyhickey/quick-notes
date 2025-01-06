@@ -20,13 +20,16 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import HkyRouter from "./router/router";
+import { ContextProvider } from "./theme/GlobalContext";
 // import { AllNotesPage } from "./pages/notes/all-notes.page";
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <HkyRouter />
+    <ContextProvider>
+      <HkyRouter />
+    </ContextProvider>
   </IonApp>
 );
 

@@ -44,15 +44,7 @@ export function AllNotesPage() {
 
   return (
     <NotesPage>
-      <Header>
-        <div id="open-modal">
-          <OutlinedButton
-            onClick={() => setIsModalOpen(!isModalOpen ? true : false)}
-          >
-            <BodyText>All Catagories</BodyText>
-          </OutlinedButton>
-        </div>
-      </Header>
+      <Header>Quick Notes</Header>
 
       <div className={style.container}>
         {notesArray.length &&

@@ -56,9 +56,9 @@ export function AddNotePage(): JSX.Element {
 
   return (
     <NotesPage>
-      <Header onClick={addNote} backButton>
+      {/* <Header onClick={addNote} backButton>
         <IonText>Add Note</IonText>
-      </Header>
+      </Header> */}
 
       <TextForms handleChange={handleChange} />
       {errorText && (

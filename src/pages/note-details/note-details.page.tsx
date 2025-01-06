@@ -3,6 +3,9 @@ import { NavigateFunction, useNavigate, useParams } from "react-router";
 import { NotesPage } from "../../components/notes-page/notes-page.component";
 import { Header } from "../../components/header/header.component";
 import { TextForms } from "../add-note/components/text-forms.component";
+import { IonFooter } from "@ionic/react";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
+import { NxtIconButton } from "../../components/common/button/icon-button/icon-button.component";
 
 export interface NoteProps {
   title: string;
@@ -93,6 +96,7 @@ export default function NoteDetailsPage() {
     if (e.code === "Enter") {
       editNote();
     }
+    DeleteSweepIcon;
   };
 
   return (
@@ -103,6 +107,24 @@ export default function NoteDetailsPage() {
         note={fetchedNote}
         handleChange={handleChange}
       />
+
+      <IonFooter style={{ backgroundColor: "gray" }} translucent={true}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <NxtIconButton
+            style={{ width: "100%" }}
+            onClick={deleteNote}
+            icon={<DeleteSweepIcon color="error" />}
+          />
+        </div>
+      </IonFooter>
     </NotesPage>
   );
 }

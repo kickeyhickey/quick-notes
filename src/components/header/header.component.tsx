@@ -1,25 +1,21 @@
-import { IonButton, IonIcon } from "@ionic/react";
-import IconArrowBack from "../../images/arrow-back-outline.svg";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useNavigate } from "react-router";
-import React, { ReactNode } from "react";
-import TrashBinImg from "../../images/trash-bin-outline.svg";
-import CheckMarkImg from "../../images/check-o.svg";
+import React, { ReactNode, useState } from "react";
 import style from "./header.module.css";
-
+import CheckIcon from "@mui/icons-material/Check";
+import { NxtIconButton } from "../common/button/icon-button/icon-button.component";
 interface HeaderProps {
-  children?: ReactNode;
   backButton?: boolean;
   isDelete?: boolean;
   deleteNote?: () => void;
   onClick?: () => void;
+  children?: ReactNode;
 }
 
 export function Header({
   onClick,
-  deleteNote,
   children,
   backButton,
-  isDelete,
 }: HeaderProps): JSX.Element {
   const navigate = useNavigate();
 
@@ -28,24 +24,22 @@ export function Header({
       <div className={style.headerBody}>
         {backButton ? (
           <div className={style.buttonContainer}>
-            <IonButton fill="clear" onClick={() => navigate("/")}>
-              <IonIcon src={IconArrowBack} />
-            </IonButton>
+            <NxtIconButton
+              icon={<ArrowBackIosIcon />}
+              onClick={() => navigate("/")}
+            />
           </div>
         ) : (
           <div></div>
         )}
+        <div style={{ flex: 1 }}></div>
+
         <div style={{ flex: 1 }}>{children}</div>
         <div style={{ flex: 1 }}></div>
-        {isDelete && (
-          <IonButton fill="clear" onClick={deleteNote}>
-            <IonIcon src={TrashBinImg} />
-          </IonButton>
-        )}
         {onClick && (
-          <IonButton fill="clear" onClick={onClick}>
-            <IonIcon src={CheckMarkImg} />
-          </IonButton>
+          <div>
+            <NxtIconButton icon={<CheckIcon />} onClick={onClick} />
+          </div>
         )}
       </div>
     </div>
