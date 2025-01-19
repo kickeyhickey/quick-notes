@@ -15,8 +15,13 @@ export function TextForms({
   return (
     <div>
       <>
-        <div style={{ paddingBottom: "16px" }}>
+        <div>
           <input
+            style={{
+              outline: ".2px solid white",
+              padding: "8px",
+              marginBottom: "16px",
+            }}
             onChange={handleChange}
             onKeyDown={onKeyDown}
             type="text"
@@ -27,6 +32,11 @@ export function TextForms({
           />
         </div>
         <textarea
+          style={{
+            outline: ".2px solid white",
+            padding: "8px",
+            marginBottom: "16px",
+          }}
           onKeyDown={onKeyDown}
           placeholder="Note"
           className={style.textarea}

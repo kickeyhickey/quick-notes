@@ -13,10 +13,6 @@ const noteCatagories = ["All Catagories", "To Do"];
 export default function DropDown(): JSX.Element {
   const [noteCatagory, setNoteCatagory] = useState<string[]>([]);
 
-  useEffect(() => {
-    console.warn("useeffect", noteCatagory);
-  }, []);
-
   const handleChange = (event: SelectChangeEvent<typeof noteCatagory>) => {
     const {
       target: { value },

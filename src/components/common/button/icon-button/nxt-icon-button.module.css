@@ -1,0 +1,10 @@
+.iconWrapper {
+  display: flex;
+  padding-right: 8px;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: left;
+  padding: 0;
+}
