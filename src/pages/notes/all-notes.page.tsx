@@ -29,7 +29,8 @@ export function AllNotesPage() {
       const response = await fetch("http://localhost:3001/notes");
 
       const notes = await response.json();
-      console.warn("notes", notes);
+      // const sortedNotes = notes.map((data: any) => data.id.sort());
+      notes.sort((a: any, b: any) => a.id - b.id);
 
       setNotesArray(notes);
     } catch (error: any) {

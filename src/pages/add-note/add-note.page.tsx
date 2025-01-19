@@ -22,8 +22,6 @@ export function AddNotePage(): JSX.Element {
   const [errorText, setErrorText] = useState<string>("");
 
   const handleChange = (e: any) => {
-    console.warn("handle", e.target.value);
-
     newNote[e.target.name as keyof NotesObjectProps] = e.target.value;
 
     setNewNote(newNote);
@@ -33,7 +31,6 @@ export function AddNotePage(): JSX.Element {
 
   const addNote = () => {
     if (newNote.title && newNote.note) {
-      console.warn("e", newNote);
       const request = new Request("http://localhost:3001/notes", {
         method: "POST",
         headers: new Headers({ "Content-Type": "application/json" }),
